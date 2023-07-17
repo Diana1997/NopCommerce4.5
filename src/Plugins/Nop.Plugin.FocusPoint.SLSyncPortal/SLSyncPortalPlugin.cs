@@ -4,7 +4,6 @@ using Nop.Core;
 using Nop.Services.Cms;
 using Nop.Services.Plugins;
 using Nop.Web.Framework.Infrastructure;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
 
 namespace Nop.Plugins.FocusPoint.SLSyncPortal
 {
