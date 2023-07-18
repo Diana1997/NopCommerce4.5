@@ -1,0 +1,15 @@
+@using OfficeOpenXml.FormulaParsing.Excel.Functions.Math
+@model IList<string>
+
+
+@{
+    Layout = "_ConfigurePlugin";
+}
+<a asp-action="Index" asp-controller="SLSyncPortal" asp-area="Admin">Back to plugin menu</a>
+
+<div>
+    @foreach (var item in Model)
+    {
+        <p>@item</p>
+    } 
+</div>

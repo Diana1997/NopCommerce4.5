@@ -1,0 +1,73 @@
+@model IList<FormField>
+
+@{
+    Layout = "_ConfigurePlugin";
+}
+
+<a asp-action="Index" asp-controller="SLSyncPortal" asp-area="Admin">Back to plugin menu</a>
+
+<div class="page-body">
+    <form asp-action="Save" asp-controller="Settings" method="post">
+        <div class="form-group">
+            <div class="col-md-12" style="display: flex;justify-content: flex-end;">
+                <button type="submit" class="btn btn-primary" style="width: 150px;">Save</button>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="col-md-2">Name</th>
+                <th class="col-md-6">Value</th>
+                <th class="col-md-4">Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var property in Model)
+            {
+                <tr>
+                    <td>
+                        @property.Name
+                    </td>
+                    <td class="th-value">
+                        @if (property.FieldType == FieldTypes.Boolean)
+                        {
+                            <div>
+                                <select name="@(property.Name)" id="@(property.Name)" class="form-control">
+                                    <option value="false" selected='@(property.Value.ToString().ToLower() == "false" ? "selected" : null)'>False</option>
+                                    <option value="true" selected='@(property.Value.ToString().ToLower() == "true" ? "selected" : null)'>True</option>
+                                </select>
+                            </div>
+                        }
+                        else if (property.FieldType == FieldTypes.String)
+                        {
+                            <div>
+                                <input type="text" id="@(property.Name)" name="@(property.Name)" value="@(property.Value)" class="form-control"/>
+                            </div>
+                        }
+                        else if (property.FieldType == FieldTypes.Int)
+                        {
+                            <div >
+                                <input type="number" id="@(property.Name)" name="@(property.Name)" value="@(property.Value)" class="form-control"/>
+                            </div>
+                        }
+                    </td>
+                    <td>
+                        @property.DescriptionValue
+                    </td>
+                </tr>
+            }
+
+            </tbody>
+        </table>
+
+
+    </form>
+</div>
+
+
+<style>
+    .th-value{
+        padding: 5px;
+    }
+</style>
+
