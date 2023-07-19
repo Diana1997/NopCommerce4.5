@@ -10,8 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using Nop.Core;
-using Nop.Plugins.FocusPoint.SLSyncPortal.Models;
-using Nop.Plugins.FocusPoint.SLSyncPortal.Servies;
+using Nop.Plugin.FocusPoint.SLSyncPortal;
+using Nop.Plugin.FocusPoint.SLSyncPortal.Models;
+using Nop.Plugin.FocusPoint.SLSyncPortal.Services;
 using Nop.Services.Configuration;
 using Nop.Web.Framework;
 using Nop.Web.Framework.Controllers;
@@ -32,11 +33,13 @@ namespace Nop.Plugins.FocusPoint.SLSyncPortal.Controllers
             ISettingService settingService,
             IStoreContext storeContext, 
             IHttpService httpService, 
-            IMemoryCache cache)
+            IMemoryCache cache, 
+            SLSyncPortalPluginSettings settings)
         {
             _httpService = httpService;
             _cache = cache;
-            _settings = settingService.LoadSetting<SLSyncPortalPluginSettings>(storeContext.ActiveStoreScopeConfiguration);
+            _settings = settings;
+            //_settings = settingService.LoadSetting<SLSyncPortalPluginSettings>(storeContext.ActiveStoreScopeConfiguration);
         }
 
         [HttpGet]
@@ -74,31 +77,38 @@ namespace Nop.Plugins.FocusPoint.SLSyncPortal.Controllers
         {
             
             var oldSettingsStr = _cache.Get("settings") as string;
-            var oldSettings = JsonConvert.DeserializeObject<IList<FormField>>(oldSettingsStr);
-            
-            IDictionary<string, object> dic = new Dictionary<string, object>();
-            foreach (var item in model)
+            if (oldSettingsStr != null)
             {
-                var setting = oldSettings.FirstOrDefault(x => x.Name == item.Key);
-                if (setting != null)
+                var oldSettings = JsonConvert.DeserializeObject<IList<FormField>>(oldSettingsStr);
+            
+                IDictionary<string, object> dic = new Dictionary<string, object>();
+                foreach (var item in model)
                 {
-                    if (setting.FieldType == FieldTypes.Int)
+                    if (oldSettings != null)
                     {
-                        dic.Add(item.Key, Convert.ToInt32(item.Value[0]));
+                        var setting = oldSettings.FirstOrDefault(x => x.Name == item.Key);
+                        if (setting != null)
+                        {
+                            if (setting.FieldType == FieldTypes.Int)
+                            {
+                                dic.Add(item.Key, Convert.ToInt32(item.Value[0]));
+                            }
+                            else
+                            {
+                                dic.Add(item.Key, item.Value[0]);
+                            }
+                            dic.Add($"_{item.Key}", setting.DescriptionValue);
+                            dic.Add($"__{item.Key}", setting.FieldType);
+                        }
                     }
-                    else
-                    {
-                        dic.Add(item.Key, item.Value[0]);
-                    }
-                    dic.Add($"_{item.Key}", setting.DescriptionValue);
-                    dic.Add($"__{item.Key}", setting.FieldType);
                 }
+
+
+                var settings = new Dictionary<string, object>();
+                settings.Add("ServiceLayerSettings", dic);
+                var response = await _httpService.Post<object, IDictionary<string, object>>($"{_settings.Url}/portal/saveSettings", settings, CancellationToken.None);
             }
 
-
-            var settings = new Dictionary<string, object>();
-            settings.Add("ServiceLayerSettings", dic);
-            var response = await _httpService.Post<object, IDictionary<string, object>>($"{_settings.Url}/portal/saveSettings", settings, CancellationToken.None);
             return RedirectToAction("Index");
         }
     }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Dynamic;
 
-namespace Nop.Plugins.FocusPoint.SLSyncPortal.Models
+namespace Nop.Plugin.FocusPoint.SLSyncPortal.Models
 {
     public class DynamicFormData : DynamicObject
     {

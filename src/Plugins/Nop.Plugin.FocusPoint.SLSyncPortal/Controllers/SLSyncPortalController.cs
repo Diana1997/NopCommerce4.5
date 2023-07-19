@@ -1,18 +1,17 @@
 ﻿using System.IO;
 using System.Net;
-using System.Security.Policy;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Nop.Core;
-using Nop.Plugins.FocusPoint.SLSyncPortal.Models;
-using Nop.Plugins.FocusPoint.SLSyncPortal.Servies;
+using Nop.Plugin.FocusPoint.SLSyncPortal.Models;
+using Nop.Plugin.FocusPoint.SLSyncPortal.Services;
 using Nop.Services.Configuration;
 using Nop.Web.Framework;
 using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Mvc.Filters;
 
-namespace Nop.Plugins.FocusPoint.SLSyncPortal.Controllers
+namespace Nop.Plugin.FocusPoint.SLSyncPortal.Controllers
 {
     [AuthorizeAdmin]
     [Area(AreaNames.Admin)]
@@ -21,26 +20,27 @@ namespace Nop.Plugins.FocusPoint.SLSyncPortal.Controllers
         private readonly ISettingService _settingService;
         private readonly IStoreContext _storeContext;
         private readonly IHttpService _httpService;
-
+        private readonly SLSyncPortalPluginSettings _settings;
         public SLSyncPortalController(
             ISettingService settingService,
             IStoreContext storeContext,
-            IHttpService httpService)
+            IHttpService httpService,
+            SLSyncPortalPluginSettings settings)
         {
             _settingService = settingService;
             _storeContext = storeContext;
             _httpService = httpService;
+            _settings = settings;
         }
 
    
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var settings = GetSettings();
-            string version = string.Empty;
-            if(settings != null)
+            var version = string.Empty;
+            if(_settings != null)
             {
-                version = await _httpService.Get($"{settings.Url}/portal/getVersion", CancellationToken.None);
+                version = await _httpService.Get($"{_settings.Url}/portal/getVersion", CancellationToken.None);
             }
 
             return View("~/Plugins/FocusPoint.SLSyncPortal/Views/Index.cshtml", version);
@@ -52,19 +52,19 @@ namespace Nop.Plugins.FocusPoint.SLSyncPortal.Controllers
             
             var model = new ConfigurationModel()
             {
-                Url = GetSettings().Url
+                Url = _settings.Url
             };
            return View("~/Plugins/FocusPoint.SLSyncPortal/Views/Configure.cshtml", model);
         }
 
         
         [HttpPost]
-        public IActionResult Configure(ConfigurationModel model)
+        public async Task<IActionResult> Configure(ConfigurationModel model)
         {
             if (!ModelState.IsValid)
                 return Configure();
             
-            _settingService.SaveSetting(new SLSyncPortalPluginSettings
+            await   _settingService.SaveSettingAsync(new SLSyncPortalPluginSettings
             {
                 Url = model.Url
             });
@@ -75,7 +75,7 @@ namespace Nop.Plugins.FocusPoint.SLSyncPortal.Controllers
         [HttpGet]
         public IActionResult Settings()
         {
-           var url = GetSettings().Url;
+           var url = _settings.Url;
 
             var request = WebRequest.Create(url);
             request.Method = "GET";
@@ -98,11 +98,11 @@ namespace Nop.Plugins.FocusPoint.SLSyncPortal.Controllers
         }
 
 
-        private SLSyncPortalPluginSettings GetSettings()
+        /*private SLSyncPortalPluginSettings GetSettings()
         {
             var storeScope = _storeContext.ActiveStoreScopeConfiguration;
             var settings = _settingService.LoadSetting<SLSyncPortalPluginSettings>(storeScope);
             return settings;
-        }
+        }*/
     }
 }

@@ -1,8 +1,7 @@
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Nop.Plugins.FocusPoint.SLSyncPortal.Servies
+namespace Nop.Plugin.FocusPoint.SLSyncPortal.Services
 {
     public interface IHttpService
     {

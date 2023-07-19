@@ -1,4 +1,4 @@
-﻿namespace Nop.Plugins.FocusPoint.SLSyncPortal.Responses
+﻿namespace Nop.Plugin.FocusPoint.SLSyncPortal.Responses
 {
     public class LogResponse
     {

@@ -1,19 +1,18 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Nop.Core;
-using Nop.Plugins.FocusPoint.SLSyncPortal.Models;
+using Nop.Plugin.FocusPoint.SLSyncPortal.Models;
+using Nop.Plugin.FocusPoint.SLSyncPortal.Services;
 using Nop.Plugins.FocusPoint.SLSyncPortal.Responses;
-using Nop.Plugins.FocusPoint.SLSyncPortal.Servies;
 using Nop.Services.Configuration;
 using Nop.Web.Framework;
 using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Mvc.Filters;
 
-namespace Nop.Plugins.FocusPoint.SLSyncPortal.Controllers
+namespace Nop.Plugin.FocusPoint.SLSyncPortal.Controllers
 {
     [AuthorizeAdmin]
     [Area(AreaNames.Admin)]
@@ -26,10 +25,11 @@ namespace Nop.Plugins.FocusPoint.SLSyncPortal.Controllers
         public QueuesController(
             ISettingService settingService,
             IStoreContext storeContext, 
-            IHttpService httpService)
+            IHttpService httpService, SLSyncPortalPluginSettings settings)
         {
             _httpService = httpService;
-            _settings = settingService.LoadSetting<SLSyncPortalPluginSettings>(storeContext.ActiveStoreScopeConfiguration);
+            _settings = settings;
+            //  _settings = settingService.LoadSetting<SLSyncPortalPluginSettings>(storeContext.ActiveStoreScopeConfiguration);
         }
         
         [HttpGet]

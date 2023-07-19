@@ -1,6 +1,5 @@
 @using Nop.Plugins.FocusPoint.SLSyncPortal.Enums
-@using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical
-@model Nop.Plugins.FocusPoint.SLSyncPortal.Models.QueuesModel
+@model Nop.Plugin.FocusPoint.SLSyncPortal.Models.QueuesModel
 
 @{
     Layout = "_ConfigurePlugin";
@@ -39,7 +38,11 @@
                             <div class="col-md-9">
                                 <select asp-for="Filter.Type"  class="form-control" >
                                      <option value="All">All</option>
-                                     <option value="Items">Items</option>
+                                    <option value="Items">Items</option>
+                                    <option value="Bussiness Partners">Bussiness Partners</option>
+                                    <option value="Orders">Orders</option>
+                                    <option value="Invoices">Invoices</option>
+                                    <option value="Delivery">Delivery</option>
                                  </select>
                             </div>
                         </div>

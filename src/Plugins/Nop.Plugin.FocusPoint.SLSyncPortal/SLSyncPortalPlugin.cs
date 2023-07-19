@@ -5,7 +5,7 @@ using Nop.Services.Cms;
 using Nop.Services.Plugins;
 using Nop.Web.Framework.Infrastructure;
 
-namespace Nop.Plugins.FocusPoint.SLSyncPortal
+namespace Nop.Plugin.FocusPoint.SLSyncPortal
 {
     public class SLSyncPortalPlugin  : BasePlugin, IWidgetPlugin
     {
