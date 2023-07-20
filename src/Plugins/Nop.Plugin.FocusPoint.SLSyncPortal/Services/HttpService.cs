@@ -7,11 +7,11 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Nop.Plugin.FocusPoint.SLSyncPortal.Exceptions;
 using Nop.Plugin.FocusPoint.SLSyncPortal.Services;
-using Nop.Plugins.FocusPoint.SLSyncPortal.Exceptions;
 
 
-namespace Nop.Plugin.FocusPoint.SLSyncPortal.Servies
+namespace Nop.Plugin.FocusPoint.SLSyncPortal.Services
 {
     public class HttpService : IHttpService
     {

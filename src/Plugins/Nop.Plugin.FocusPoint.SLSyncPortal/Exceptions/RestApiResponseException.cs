@@ -1,7 +1,7 @@
 using System;
 using System.Net;
 
-namespace Nop.Plugins.FocusPoint.SLSyncPortal.Exceptions
+namespace Nop.Plugin.FocusPoint.SLSyncPortal.Exceptions
 {
     public class RestApiResponseException : Exception
     {
