@@ -1,9 +1,14 @@
-@model string
+@model Nop.Plugin.FocusPoint.SLSyncPortal.Responses.VersionResponse
 @{
     Layout = "_ConfigurePlugin";
 }
 
 
+<div class="d-flex">
+    <p>Version - @Model.Value </p>
+    <span> , </span>
+    <p style="margin-left:4px">BuildDateTime @Model.Value.
+</div>
 <div class="d-flex">
     <div class="item-content">
         <a asp-action="Index" asp-controller="Queues" asp-area="Admin">
@@ -47,23 +52,6 @@
 
     </div>
 </div>
-
-
-
-<p>Version - @Model</p>
-
-
-@*<a asp-action="Index" asp-controller="Queues" asp-area="Admin"> Queues</a>
-<br/>
-<a asp-action="Index" asp-controller="Logs" asp-area="Admin"> Logs</a>
-<br/>
-<a asp-action="Index" asp-controller="Settings" asp-area="Admin"> Settings</a>
-<br/>
-<a asp-action="Index" asp-controller="Installation" asp-area="Admin"> Installations</a>
-<br/>
-<a asp-action="Index" asp-controller="Synchronization" asp-area="Admin"> Synchronization</a>
-<hr />
-<p>Version - @Model</p>*@
 
 <style>
     .item-bg{

@@ -6,9 +6,18 @@
 }
 <a asp-action="Index" asp-controller="SLSyncPortal" asp-area="Admin">Back to plugin menu</a>
 
-<div>
+<div class="box">
     @foreach (var item in Model)
     {
         <p>@item</p>
     } 
 </div>
+
+<style>
+   .box{
+        border: 1px solid #000;
+        padding: 15px;
+        overflow-y: auto;
+        height: 60%;
+    }
+</style>

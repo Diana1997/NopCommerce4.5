@@ -35,17 +35,11 @@ namespace Nop.Plugin.FocusPoint.SLSyncPortal.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-          //  var settings = GetSettings();
             var response = await _httpService.Get<IList<string>>($"{_settings.Url}/portal/log", CancellationToken.None);
             
             return View("~/Plugins/FocusPoint.SLSyncPortal/Views/Logs/Index.cshtml", response);
         }
         
-        /*private SLSyncPortalPluginSettings GetSettings()
-        {
-            int storeScope = _storeContext.ActiveStoreScopeConfiguration;
-            var settings = _settingService.LoadSetting<SLSyncPortalPluginSettings>(storeScope);
-            return settings;
-        }*/
+
     }
 }

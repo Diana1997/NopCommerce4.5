@@ -37,9 +37,9 @@
                             </div>
                             <div class="col-md-9">
                                 <select asp-for="Filter.Type"  class="form-control" >
-                                     <option value="All">All</option>
-                                    <option value="Items">Items</option>
-                                    <option value="Bussiness Partners">Bussiness Partners</option>
+                                    <option value="All">All</option>
+                                    <option value="ItemCode">Items</option>
+                                    <option value="CardCode">Bussiness Partners</option>
                                     <option value="Orders">Orders</option>
                                     <option value="Invoices">Invoices</option>
                                     <option value="Delivery">Delivery</option>
@@ -70,14 +70,14 @@
 </div>
 
 <div>
-    <table class="table table-bordered table-hover table-striped dataTable no-footer" width="100%" role="grid" style="margin-left: 0px; width: 1211px;">
+    <table  role="grid" style="margin-left: 0px; width: 1211px;" id="items">
         <thead>
-        <tr class="row">
-            <th>Date</th>
-            <th>Type</th>
-            <th>Key</th>
-            <th>Value</th>
-            <th>Retry Count</th>
+        <tr >
+            <th >Date</th>
+            <th >Type</th>
+            <th >Key</th>
+            <th >Value</th>
+            <th >Retry Count</th>
         </tr>
         </thead>
         <tbody>
@@ -85,10 +85,10 @@
         {
             foreach (var item in Model.Items)
             {
-                <tr class="row">
-                    <td>@item.Date</td>
-                    <td>@item.Type</td>
-                    <td>@item.Key</td>
+                <tr>
+                    <td >@item.Date</td>
+                    <td >@item.Type</td>
+                    <td >@item.Key</td>
                     <td>@item.Value</td>
                     <td>@item.RetryCount</td>
                 </tr>
@@ -128,7 +128,6 @@
 
 .page-link {
     display: inline-block;
-    padding: 1.5rem 2rem;
     color: #007bff;
     background-color: #fff;
     border: 1px solid #dee2e6;
@@ -148,6 +147,29 @@
     color: #fff;
     background-color: #007bff;
     border-color: #007bff;
+}
+
+#items {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#items td, #items th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#items tr:nth-child(even){background-color: #f2f2f2;}
+
+#items tr:hover {background-color: #ddd;}
+
+#items th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #3c8dbc;
+  color: white;
 }
 </style>
 

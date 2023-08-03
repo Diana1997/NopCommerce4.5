@@ -64,6 +64,8 @@ namespace Nop.Plugins.FocusPoint.SLSyncPortal.Controllers
                     list.Add(field);
                 }
             }
+            
+            //delete description 
 
             var settings = JsonConvert.SerializeObject(list);
             _cache.Set("settings", settings);

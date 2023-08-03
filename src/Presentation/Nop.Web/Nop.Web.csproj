@@ -64,6 +64,16 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Plugins\FocusPoint.SLSyncPortal\Nop.Plugin.FocusPoint.SLSyncPortal.deps.json" />
+    <_ContentIncludedByDefault Remove="Plugins\FocusPoint.SLSyncPortal\Views\Configure.cshtml" />
+    <_ContentIncludedByDefault Remove="Plugins\FocusPoint.SLSyncPortal\Views\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Plugins\FocusPoint.SLSyncPortal\Views\Installations\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Plugins\FocusPoint.SLSyncPortal\Views\Logs\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Plugins\FocusPoint.SLSyncPortal\Views\Queues\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Plugins\FocusPoint.SLSyncPortal\Views\Settings.cshtml" />
+    <_ContentIncludedByDefault Remove="Plugins\FocusPoint.SLSyncPortal\Views\Settings\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Plugins\FocusPoint.SLSyncPortal\Views\Synchronizations\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Plugins\FocusPoint.SLSyncPortal\Views\_ViewImports.cshtml" />
+    <_ContentIncludedByDefault Remove="Plugins\FocusPoint.SLSyncPortal\plugin.json" />
   </ItemGroup>
 
   <!-- This target execute after "Build" target.
