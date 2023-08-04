@@ -22,14 +22,19 @@ namespace Nop.Plugin.FocusPoint.SLSyncPortal.Services
         {
             var handler = new HttpClientHandler()
             {
-                ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator,
             };
             _client = new HttpClient(handler) ;
         }
 
 
-        public async Task<TResponse> Get<TResponse>(string url, CancellationToken cancellationToken)
+        public async Task<TResponse> Get<TResponse>(string url, CancellationToken cancellationToken,
+            bool changeTimeout = false)
         {
+            if (changeTimeout)
+            {
+                _client.Timeout = TimeSpan.FromSeconds(10);
+            }
             
             var response = await _client.GetAsync(url, cancellationToken);
             if (response.IsSuccessStatusCode)
@@ -53,6 +58,7 @@ namespace Nop.Plugin.FocusPoint.SLSyncPortal.Services
 
             throw new RestApiResponseException("RequestFailed");
         }
+        
 
         public async Task<string> Get(string url, CancellationToken cancellationToken, bool setLongTimeout = false)
         {
@@ -62,7 +68,7 @@ namespace Nop.Plugin.FocusPoint.SLSyncPortal.Services
                 {
                     _client.Timeout = TimeSpan.FromMinutes(10);
                 }
-
+                
                 var response = await _client.GetAsync(url, cancellationToken);
 
                 if (!response.IsSuccessStatusCode)

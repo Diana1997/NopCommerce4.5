@@ -33,7 +33,7 @@ namespace Nop.Plugin.FocusPoint.SLSyncPortal.Controllers
         }
         
         [HttpGet]
-        public async Task<IActionResult> Index(int page = 1, int pageSize = 1, [FromQuery] QueuesFilterModel filter = null)
+        public async Task<IActionResult> Index(int page = 1, int pageSize = 25, [FromQuery] QueuesFilterModel filter = null)
         {
             var model = new QueuesModel();
             var allItems = new List<QueuesItem>()

@@ -39,11 +39,21 @@ namespace Nop.Plugin.FocusPoint.SLSyncPortal.Controllers
         public async Task<IActionResult> Index()
         {
             VersionResponse version = null;
-            if(_settings != null)
+
+            try
             {
-                version = await _httpService.Get<VersionResponse>($"{_settings.Url}/portal/settings/value",
-                    CancellationToken.None);
+                if(_settings != null)
+                {
+                    version = await _httpService.Get<VersionResponse>($"{_settings.Url}/portal/settings/value",
+                        CancellationToken.None, true);
+                }
             }
+            catch
+            {
+                
+            }
+           
+        
 
             return View("~/Plugins/FocusPoint.SLSyncPortal/Views/Index.cshtml", version);
         }

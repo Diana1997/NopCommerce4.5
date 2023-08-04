@@ -80,7 +80,7 @@ namespace Nop.Plugins.FocusPoint.SLSyncPortal.Controllers
             if (oldSettingsStr != null)
             {
                 var oldSettings = JsonConvert.DeserializeObject<IList<FormField>>(oldSettingsStr);
-            
+
                 IDictionary<string, object> dic = new Dictionary<string, object>();
                 foreach (var item in model)
                 {
@@ -97,8 +97,6 @@ namespace Nop.Plugins.FocusPoint.SLSyncPortal.Controllers
                             {
                                 dic.Add(item.Key, item.Value[0]);
                             }
-                            dic.Add($"_{item.Key}", setting.DescriptionValue);
-                            dic.Add($"__{item.Key}", setting.FieldType);
                         }
                     }
                 }
@@ -106,9 +104,12 @@ namespace Nop.Plugins.FocusPoint.SLSyncPortal.Controllers
 
                 var settings = new Dictionary<string, object>();
                 settings.Add("ServiceLayerSettings", dic);
-                var response = await _httpService.Post<object, IDictionary<string, object>>($"{_settings.Url}/portal/saveSettings", settings, CancellationToken.None);
+                var response = await _httpService
+                    .Post<object, IDictionary<string, object>>($"{_settings.Url}/portal/saveSettings", 
+                        settings,
+                        CancellationToken.None);
             }
-
+            
             return RedirectToAction("Index");
         }
     }

@@ -41,7 +41,15 @@
                         else if (property.FieldType == FieldTypes.String)
                         {
                             <div>
-                                <input type="text" id="@(property.Name)" name="@(property.Name)" value="@(property.Value)" class="form-control"/>
+                                @if (property.Name.ToLower().Contains("password"))
+                                {
+                                    <input type="password" id="@(property.Name)" name="@(property.Name)" value="@(property.Value)" class="form-control"/>
+                                }
+                                else
+                                {
+                                    <input type="text" id="@(property.Name)" name="@(property.Name)" value="@(property.Value)" class="form-control"/>
+
+                                }
                             </div>
                         }
                         else if (property.FieldType == FieldTypes.Int)
