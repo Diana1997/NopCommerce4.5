@@ -4,39 +4,35 @@
 
 <a asp-action="Index" asp-controller="SLSyncPortal" asp-area="Admin">Back to plugin menu</a>
 
-@*
-<div class="d-flex">
-    <div>
-        <button type="button" class="btn btn-primary" id="createUo">Create.UO</button>
-    </div>
-    <div>
-        <button type="button" class="btn btn-primary"  id="FIT" >FIT.WS1</button>
-    </div>
-</div>
-
-<div class="d-flex">
-    <div>
-        <button type="button" class="btn btn-primary"  id="storedProcedures">Stored procedures</button>
-    </div>
-    <div>
-         <button type="button" class="btn btn-primary"  id="eventUdt">Event UDT</button>
-    </div>
-</div>
-*@
-
 
 <div>
     <div style="padding: 5px">
-        <button type="button" class="btn btn-primary" id="createUo">Create.UO</button>
+        <button type="button" class="btn btn-primary" id="createUo">
+            <span class="spinner-border spinner-border-sm btn-spinner" role="status" 
+                          aria-hidden="true" style="display: none;     margin-right: 8px;"></span>
+            Create.UO
+        </button>
     </div>
     <div style="padding: 5px">
-        <button type="button" class="btn btn-primary"  id="FIT" >FIT.WS1</button>
+        <button type="button" class="btn btn-primary" id="FIT">
+            <span class="spinner-border spinner-border-sm btn-spinner" role="status" 
+                          aria-hidden="true" style="display: none;     margin-right: 8px;"></span>
+            FIT.WS1
+        </button>
     </div>
     <div style="padding: 5px">
-        <button type="button" class="btn btn-primary"  id="storedProcedures">Stored procedures</button>
+        <button type="button" class="btn btn-primary" id="storedProcedures">
+            <span class="spinner-border spinner-border-sm btn-spinner" role="status" 
+                          aria-hidden="true" style="display: none;     margin-right: 8px;"></span>
+            Stored procedures
+        </button>
     </div>
     <div style="padding: 5px">
-        <button type="button" class="btn btn-primary"  id="eventUdt">Event UDT</button>
+        <button type="button" class="btn btn-primary" id="eventUdt">
+            <span class="spinner-border spinner-border-sm btn-spinner" role="status" 
+                          aria-hidden="true" style="display: none;     margin-right: 8px;"></span>
+            Event UDT
+        </button>
     </div>
 </div>
 
@@ -76,20 +72,29 @@
         
     });
     
-    
-   function handleButtonClick(buttonId, actionUrl) {
+function handleButtonClick(buttonId, actionUrl) {
+       let button = $('#' + buttonId);
+       
        $('#message').text('');
-       $('#' + buttonId).click(function() {
+       
+       button.click(function() {
+                     $(this).find('.btn-spinner').show();
+
            $.ajax({
                url: actionUrl,
                type: 'GET',
                dataType: 'html',
                success: function(result) {
-                     $("#message").text(result);
+                   $("#message").text(result);
                    toastr.success('Action completed successfully.');
                },
                error: function(xhr, status, error) {
                    toastr.error('Action failed.');
+               },
+               complete: function() {
+                   button.prop('disabled', false);
+              button.find('.btn-spinner').hide();
+
                }
            });
        });

@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Nop.Core;
 using Nop.Plugin.FocusPoint.SLSyncPortal;
 using Nop.Plugin.FocusPoint.SLSyncPortal.Models;
+using Nop.Plugin.FocusPoint.SLSyncPortal.Responses;
 using Nop.Plugin.FocusPoint.SLSyncPortal.Services;
 using Nop.Services.Configuration;
 using Nop.Web.Framework;
@@ -23,15 +24,15 @@ namespace Nop.Plugins.FocusPoint.SLSyncPortal.Controllers
     [Route("Admin/SLSyncPortal/[controller]/[action]")]
     public class SettingsController : BasePluginController
     {
-        private readonly  SLSyncPortalPluginSettings _settings;
+        private readonly SLSyncPortalPluginSettings _settings;
         private readonly IHttpService _httpService;
         private readonly IMemoryCache _cache;
 
         public SettingsController(
             ISettingService settingService,
-            IStoreContext storeContext, 
-            IHttpService httpService, 
-            IMemoryCache cache, 
+            IStoreContext storeContext,
+            IHttpService httpService,
+            IMemoryCache cache,
             SLSyncPortalPluginSettings settings)
         {
             _httpService = httpService;
@@ -41,7 +42,7 @@ namespace Nop.Plugins.FocusPoint.SLSyncPortal.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult>  Index()
+        public async Task<IActionResult> Index()
         {
             var response = await _httpService.Get<Root>($"{_settings.Url}/portal/settings", CancellationToken.None);
 
@@ -59,12 +60,12 @@ namespace Nop.Plugins.FocusPoint.SLSyncPortal.Controllers
                         Value = item.Value,
                         Description = model.FirstOrDefault(x => x.Key.StartsWith($"_{item.Key}")).Key as string,
                         DescriptionValue = model.FirstOrDefault(x => x.Key.StartsWith($"_{item.Key}")).Value as string,
-                        FieldType  = model.FirstOrDefault(x => x.Key.StartsWith($"__{item.Key}")).Value as string,
+                        FieldType = model.FirstOrDefault(x => x.Key.StartsWith($"__{item.Key}")).Value as string,
                     };
                     list.Add(field);
                 }
             }
-            
+
             //delete description 
 
             var settings = JsonConvert.SerializeObject(list);
@@ -75,7 +76,6 @@ namespace Nop.Plugins.FocusPoint.SLSyncPortal.Controllers
         [HttpPost]
         public async Task<IActionResult> Save(IFormCollection model)
         {
-            
             var oldSettingsStr = _cache.Get("settings") as string;
             if (oldSettingsStr != null)
             {
@@ -105,11 +105,17 @@ namespace Nop.Plugins.FocusPoint.SLSyncPortal.Controllers
                 var settings = new Dictionary<string, object>();
                 settings.Add("ServiceLayerSettings", dic);
                 var response = await _httpService
-                    .Post<object, IDictionary<string, object>>($"{_settings.Url}/portal/saveSettings", 
+                    .Post<CommonResponse, IDictionary<string, object>>($"{_settings.Url}/portal/saveSettings",
                         settings,
                         CancellationToken.None);
+
+                response.Message = "sff";
+                if (response.Status != "success")
+                {
+                    return BadRequest(response.Message);
+                }
             }
-            
+
             return RedirectToAction("Index");
         }
     }

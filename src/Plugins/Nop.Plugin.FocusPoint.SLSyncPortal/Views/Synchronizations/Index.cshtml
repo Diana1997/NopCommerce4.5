@@ -4,25 +4,59 @@
     Layout = "_ConfigurePlugin";
 }
 
+<style>
+    .spinner-border {
+      width: 1.5rem;
+      height: 1.5rem;
+      border-width: 0.2em;
+    }
+    
+    .syncBtn {
+      display: inline-flex;
+      align-items: center;
+    }
+    
+    .d-none {
+      display: none !important; 
+    }
+</style>
 <a asp-action="Index" asp-controller="SLSyncPortal" asp-area="Admin">Back to plugin menu</a>
 
 
 <div class="d-flex">
     <div style="padding: 5px">
-        <button type="button" class="btn btn-primary syncBtn"   id="FullItemSync">Full item sync</button>
+        <button type="button" class="btn btn-primary syncBtn" id="FullItemSync">
+            <span class="spinner-border spinner-border-sm btn-spinner" role="status" 
+                          aria-hidden="true" style="display: none;     margin-right: 8px;"></span>
+            Full item sync
+        </button>
     </div>
     <div style="padding: 5px">
-        <button type="button" class="btn btn-primary syncBtn"   id="FullBPSync">Full BP Sync</button>
+   
+        <button type="button" class="btn btn-primary syncBtn" id="FullBPSync">
+            <span class="spinner-border spinner-border-sm btn-spinner" role="status" 
+                          aria-hidden="true" style="display: none;     margin-right: 8px;"></span>
+            Full BP Sync
+        </button>
     </div>
     
 </div>
 
 <div class="d-flex">
-<div style="padding: 5px">
-        <button type="button" class="btn btn-primary syncBtn"   id="InventorySync">Inventory sync</button>
+    <div style="padding: 5px">
+        <button type="button" class="btn btn-primary syncBtn" id="InventorySync">
+            <span class="spinner-border spinner-border-sm btn-spinner" role="status" 
+                          aria-hidden="true" style="display: none;     margin-right: 8px;"></span>
+            Inventory sync
+        </button>
     </div>
     <div style="padding: 5px">
-        <button type="button" class="btn btn-primary syncBtn"   id="InventoryDeltaSync">Inventory Delta sync</button>
+        
+        <button type="button" class="btn btn-primary syncBtn" id="InventoryDeltaSync">
+            <span class="spinner-border spinner-border-sm btn-spinner" role="status" 
+                          aria-hidden="true" style="display: none;     margin-right: 8px;"></span>
+            Inventory Delta sync
+        </button>
     </div>
 
 </div>
@@ -101,20 +135,31 @@
     });
 
    function handleButtonClick(buttonId, actionUrl) {
+       let button = $('#' + buttonId);
+       
        $('#message').text('');
-       $('#' + buttonId).click(function() {
+       
+       button.click(function() {
+                     $(this).find('.btn-spinner').show();
+
            $.ajax({
                url: actionUrl,
                type: 'GET',
                dataType: 'html',
                success: function(result) {
-                     $("#message").text(result);
+                   $("#message").text(result);
                    toastr.success('Action completed successfully.');
                },
                error: function(xhr, status, error) {
                    toastr.error('Action failed.');
+               },
+               complete: function() {
+                   button.prop('disabled', false);
+              button.find('.btn-spinner').hide();
+
                }
            });
        });
    }
+
 </script>
