@@ -20,6 +20,8 @@
       display: none !important; 
     }
 </style>
+<link rel="stylesheet" href="~/Plugins/FocusPoint.SLSyncPortal/Styles/toastr.min.css"/>
+
 <a asp-action="Index" asp-controller="SLSyncPortal" asp-area="Admin">Back to plugin menu</a>
 
 
@@ -117,7 +119,8 @@
 
 
     $('#reSycnForm').submit(function (e) {
-        e.preventDefault(); // prevent default form submission behavior
+        e.preventDefault(); 
+        clearMessage();
         let form = $(this);
         console.log(form.serialize);
         $.ajax({
@@ -125,29 +128,30 @@
             type: 'POST',
             data: form.serialize(),
             success: function (result) {
-                $("#message").text(result);
                 toastr.success('Action completed successfully.');
             },
             error: function (xhr, status, error) {
-                toastr.error('Action failed.');
+               $("#message").text(error.responseText);
+               toastr.error('Action failed.');
             }
         });
     });
 
    function handleButtonClick(buttonId, actionUrl) {
        let button = $('#' + buttonId);
-       
-       $('#message').text('');
+
+      clearMessage();
        
        button.click(function() {
-                     $(this).find('.btn-spinner').show();
+           button.prop('disabled', true);
+
+           $(this).find('.btn-spinner').show();
 
            $.ajax({
                url: actionUrl,
                type: 'GET',
                dataType: 'html',
                success: function(result) {
-                   $("#message").text(result);
                    toastr.success('Action completed successfully.');
                },
                error: function(xhr, status, error) {
@@ -155,11 +159,13 @@
                },
                complete: function() {
                    button.prop('disabled', false);
-              button.find('.btn-spinner').hide();
-
+                   button.find('.btn-spinner').hide();
                }
            });
        });
    }
 
+   function clearMessage() { 
+       $('#message').text('');
+   }
 </script>
