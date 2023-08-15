@@ -9,7 +9,9 @@
 <a asp-action="Index" asp-controller="SLSyncPortal" asp-area="Admin">Back to plugin menu</a>
 <div>
     <button  class="btn btn-primary" type="button" id="clearQueueBtn">Clear Queue</button>
-    <button  class="btn btn-primary" type="button" id="refreshQueueBtn">Refresh Queue</button>
+    <a href="@Url.Action("Index", "Queues",
+                 new { page = 1 })" class="btn btn-primary" 
+       id="refreshQueueBtn">Refresh Queue</a>
 </div>
 
 <div style="margin-top: 35px">
@@ -72,7 +74,6 @@
     <table  role="grid" style="margin-left: 0px; width: 1211px;" id="items">
         <thead>
         <tr >
-            <th>N</th>
             <th >Date</th>
             <th >Type</th>
             <th >Key</th>
@@ -87,7 +88,6 @@
             foreach (var item in Model.Items)
             {
                 <tr>
-                    <td>@i</td>
                     <td >@item.Date</td>
                     <td >@item.Type</td>
                     <td >@item.Key</td>
@@ -230,17 +230,6 @@ margin-top: 5px;
                         toastr.error('Action failed.'); 
                    }
                });
-           });
-        
-        
-        $('#refreshQueueBtn').click(() => {
-              $.ajax({
-                               url: '@Url.Action("Index", "Queues")',
-                               type: 'GET',
-                               dataType: 'html',
-                               })
-        
-        })
-        
+           });        
     });
 </script>

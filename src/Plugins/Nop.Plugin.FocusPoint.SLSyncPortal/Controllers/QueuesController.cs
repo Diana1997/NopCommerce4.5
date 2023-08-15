@@ -30,11 +30,10 @@ namespace Nop.Plugin.FocusPoint.SLSyncPortal.Controllers
         {
             _httpService = httpService;
             _settings = settings;
-            //  _settings = settingService.LoadSetting<SLSyncPortalPluginSettings>(storeContext.ActiveStoreScopeConfiguration);
         }
         
         [HttpGet]
-        public async Task<IActionResult> Index(int page = 1, int pageSize = 2, [FromQuery] QueuesFilterModel filter = null)
+        public async Task<IActionResult> Index(int page = 1, int pageSize = 25, [FromQuery] QueuesFilterModel filter = null)
         {
             
            var result = await _httpService.Get<IList<QueuesItem>>($"{_settings.Url}//portal/queue?page-number={page}&page-size={pageSize}",

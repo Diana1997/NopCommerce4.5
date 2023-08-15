@@ -100,14 +100,14 @@
 <script>
 
     $(document).ready(function () {
-        handleButtonClick('createUo', '@Url.Action("CreateUo", "Installation")');
+        handleButtonClick('createUo', '@Url.Action("CreateUo", "Installation", true)'); 
         handleButtonClick('FIT', '@Url.Action("InstallWs1", "Installation")');
         handleButtonClick('storedProcedures', '@Url.Action("StoredProcedures", "Installation")');
-        handleButtonClick('eventUdt', '@Url.Action("EventUDT", "Installation")', 'eventUdt');
+        handleButtonClick('eventUdt', '@Url.Action("EventUDT", "Installation")', true);
         
     });
     
-function handleButtonClick(buttonId, actionUrl, name  = '') {
+function handleButtonClick(buttonId, actionUrl, handleTable = false) {
        let button = $('#' + buttonId);
        
        $('#message').text('');
@@ -115,20 +115,18 @@ function handleButtonClick(buttonId, actionUrl, name  = '') {
        button.click(function() {
                      $(this).find('.btn-spinner').show();
                              button.prop('disabled', true);
-                             console.log('btn click' )
 
            $.ajax({
                url: actionUrl,
                type: 'GET',
                dataType: 'json',
                success: function(result) {
-                   //$("#message").text(result);
                              button.prop('disabled', false);
                                  button.find('.btn-spinner').hide();
                    toastr.success('Action completed successfully.');
                    
-                   if (name === 'eventUdt'){
-                       eventUdtDataFill(result);
+                   if (handleTable){
+                       handleDataToTable(result);
                    }
                },
                error: function(xhr, status, error) {
@@ -144,28 +142,25 @@ function handleButtonClick(buttonId, actionUrl, name  = '') {
    }
    
    
-   function eventUdtDataFill(response){
+    function handleDataToTable(response){
     
-            $('#data-table').hide();
-            let tbody = $('#data-table tbody');
-            tbody.empty();
+        $('#data-table').hide();
+        let tbody = $('#data-table tbody');
+        tbody.empty();
+        
+        
+        $.each(response, function (index, item) {
+        var row = $('<tr>');
+        row.append($('<td>').text(item.ObjectType));
+        row.append($('<td>').text(item.IsSuccessful));
+        row.append($('<td>').text(item.ID));
+        row.append($('<td>').text(item.Message));
+        tbody.append(row);
+        });
+        
+        $('#data-table').show();
+    }
 
-                    // Get the tbody element to append rows
-
-                    // Loop through the JSON data and create rows
-                    $.each(response, function (index, item) {
-                        var row = $('<tr>');
-                        row.append($('<td>').text(item.ObjectType));
-                        row.append($('<td>').text(item.IsSuccessful));
-                        row.append($('<td>').text(item.ID));
-                        row.append($('<td>').text(item.Message));
-                        tbody.append(row);
-                    });
-
-                    // Show the table after populating
-                    $('#data-table').show();
-}
-   
    
    
 </script>
