@@ -109,7 +109,6 @@ namespace Nop.Plugins.FocusPoint.SLSyncPortal.Controllers
                         settings,
                         CancellationToken.None);
 
-                response.Message = "sff";
                 if (response.Status != "success")
                 {
                     return BadRequest(response.Message);

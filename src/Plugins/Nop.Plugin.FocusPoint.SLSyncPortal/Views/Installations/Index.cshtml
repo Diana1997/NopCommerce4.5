@@ -54,7 +54,7 @@
 
 
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+<link rel="stylesheet" href="~/Plugins/FocusPoint.SLSyncPortal/Styles/toastr.min.css"/>
 <style>
     
     button{
@@ -94,8 +94,8 @@
 </style>
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="~/Plugins/FocusPoint.SLSyncPortal/Scripts/jquery-3.6.0.min.js"></script>
+<script src="~/Plugins/FocusPoint.SLSyncPortal/Scripts/toastr.min.js"></script>
 <script src="~/Plugins/FocusPoint.SLSyncPortal/Scripts/notification.js"></script>
 <script>
 
@@ -104,7 +104,6 @@
         handleButtonClick('FIT', '@Url.Action("InstallWs1", "Installation")');
         handleButtonClick('storedProcedures', '@Url.Action("StoredProcedures", "Installation")');
         handleButtonClick('eventUdt', '@Url.Action("EventUDT", "Installation")', true);
-        
     });
     
 function handleButtonClick(buttonId, actionUrl, handleTable = false) {
@@ -142,25 +141,23 @@ function handleButtonClick(buttonId, actionUrl, handleTable = false) {
    }
    
    
-    function handleDataToTable(response){
-    
-        $('#data-table').hide();
-        let tbody = $('#data-table tbody');
-        tbody.empty();
-        
-        
-        $.each(response, function (index, item) {
-        var row = $('<tr>');
-        row.append($('<td>').text(item.ObjectType));
-        row.append($('<td>').text(item.IsSuccessful));
-        row.append($('<td>').text(item.ID));
-        row.append($('<td>').text(item.Message));
-        tbody.append(row);
-        });
-        
-        $('#data-table').show();
-    }
+function handleDataToTable(response){
 
-   
-   
+    $('#data-table').hide();
+    let tbody = $('#data-table tbody');
+    tbody.empty();
+    
+    
+    $.each(response, function (index, item) {
+    var row = $('<tr>');
+    row.append($('<td>').text(item.ObjectType));
+    row.append($('<td>').text(item.IsSuccessful));
+    row.append($('<td>').text(item.ID));
+    row.append($('<td>').text(item.Message));
+    tbody.append(row);
+    });
+    
+    $('#data-table').show();
+}
+
 </script>

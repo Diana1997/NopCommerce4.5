@@ -72,7 +72,6 @@ namespace Nop.Plugin.FocusPoint.SLSyncPortal.Controllers
         [HttpPost]
         public async Task<IActionResult> ReSyncObject([FromForm]ReSyncObject model)
         {
-            //status - boolean, message
             var response = await _httpService.Get<ReSyncResponse>($"{_settings.Url}/portal/sync?Object={model.Object}&Code={model.Code}", CancellationToken.None);
 
             if (!response.Status)

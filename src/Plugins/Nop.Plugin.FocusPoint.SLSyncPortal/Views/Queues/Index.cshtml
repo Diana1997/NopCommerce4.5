@@ -84,7 +84,6 @@
         <tbody>
         @if (Model.Items != null)
         {
-            int i = 1;
             foreach (var item in Model.Items)
             {
                 <tr>
@@ -94,7 +93,6 @@
                     <td>@item.Value</td>
                     <td>@item.RetryCount</td>
                 </tr>
-                ++i;
             }
         }
         
@@ -160,6 +158,7 @@ margin-top: 5px;
      .pagination {
                 margin-top: 20px;
                 text-align: center;
+                display: flex;
             }
     
             .pagination a, .pagination span {

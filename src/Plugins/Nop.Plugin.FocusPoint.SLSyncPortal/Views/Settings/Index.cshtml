@@ -4,7 +4,7 @@
     Layout = "_ConfigurePlugin";
 }
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+<link rel="stylesheet" href="~/Plugins/FocusPoint.SLSyncPortal/Styles/toastr.min.css"/>
 
 <a asp-action="Index" asp-controller="SLSyncPortal" asp-area="Admin">Back to plugin menu</a>
 
@@ -56,7 +56,7 @@
                         }
                         else if (property.FieldType == FieldTypes.Int)
                         {
-                            <div >
+                            <div>
                                 <input type="number" id="@(property.Name)" name="@(property.Name)" value="@(property.Value)" class="form-control"/>
                             </div>
                         }
@@ -81,8 +81,8 @@
     }
 </style>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="~/Plugins/FocusPoint.SLSyncPortal/Scripts/jquery-3.6.0.min.js"></script>
+<script src="~/Plugins/FocusPoint.SLSyncPortal/Scripts/toastr.min.js"></script>
 <script src="~/Plugins/FocusPoint.SLSyncPortal/Scripts/notification.js"></script>
 <script>
     $(document).ready(function() {
